@@ -49,8 +49,8 @@ class EventController {
       const { dateTime, duration } = req.body;
       const utcStartTime = dateTime.toUTCString();
       const utcEndTime = moment(utcStartTime).add(duration, 'minutes');
-      const doctorId = '123';
-      const userId = '123';
+      const doctorId = '1234';
+      const userId = '1234';
       const result = await EventController.getInstance().eventService.create({
         doctorId: '123',
         events: [{

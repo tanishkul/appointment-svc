@@ -5,7 +5,7 @@ export default class UserSchema extends VersionableSchema {
     const baseSchema = {
       ...options,
       id: {
-        required: true,
+        required: false,
         type: String,
       },
       name: {

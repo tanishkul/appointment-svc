@@ -17,6 +17,7 @@ export default class Database {
         reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
         useFindAndModify: false,
         useNewUrlParser: true,
+        useUnifiedTopology: true,
       };
 
       // Mock the mongoose for testing purpose using Mockgoose

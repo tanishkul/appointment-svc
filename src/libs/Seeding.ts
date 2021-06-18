@@ -1,5 +1,5 @@
-import UserRepository from '../repositories/user/UserRepository';
-import DoctorRepository from '../repositories/doctor/DoctorRepository';
+import DoctorRepository from '../repositories/business/doctor/repository';
+import UserRepository from '../repositories/business/user/repository';
 
 const seed = async () => {
   console.log('............');
@@ -8,14 +8,14 @@ const seed = async () => {
 
   userRepository.count().then((count) => {
     if (count === 0) {
-      userRepository.create({ name: 'User1', email: 'user1@gmail.com' });
+      userRepository.create({ name: 'User1' });
     }
   });
   const doctorRepository = new DoctorRepository();
 
   doctorRepository.count().then((count) => {
     if (count === 0) {
-      doctorRepository.create({ name: 'Doctor1', email: 'doctor1@gmail.com' });
+      doctorRepository.create({ name: 'Doctor1' });
     }
   });
 };

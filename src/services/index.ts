@@ -1,5 +1,5 @@
-import CartService from './cart/CartService';
-import ProductService from './product/ProductService';
+import DoctorService from './doctor/DoctorService';
+import EventService from './event/EventService';
 import UserService from './user/UserService';
 
-export { ProductService, UserService, CartService };
+export { DoctorService, UserService, EventService };

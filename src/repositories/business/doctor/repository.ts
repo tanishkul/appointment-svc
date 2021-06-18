@@ -9,74 +9,75 @@ import {
   IQueryList,
   IQueryUpdate,
 } from './entities';
-import IUserModel from './IModel';
-import { userModel } from './model';
+import IDoctorModel from './IModel';
+import { doctorModel } from './model';
 
-export default class UserRepository extends VersioningRepository<
-  IUserModel,
-  mongoose.Model<IUserModel>
+export default class DoctorRepository extends VersioningRepository<
+  IDoctorModel,
+  mongoose.Model<IDoctorModel>
 > {
   constructor() {
-    super(userModel);
+    super(doctorModel);
   }
 
   public async count(): Promise<number> {
     return super.countDocuments();
   }
+
   /**
-   * Get user list.
+   * Get doctor list.
    * @property {number} skip - Number of records to be skipped.
    * @property {number} limit - Limit number of records to be returned.
-   * @returns {User[]}
+   * @returns {Doctor[]}
    */
   public async list(
     options: IQueryList,
     query: any = {},
-  ): Promise<IUserModel[]> {
+  ): Promise<IDoctorModel[]> {
     options.sort = 'name';
-    console.log('User - List query: ', options);
+    console.log('Doctor - List query: ', options);
     return super.getAll(query, options);
   }
 
   /**
-   * Get user.
+   * Get doctor.
    * @property {string} id - _id of the record
-   * @returns {User}
+   * @returns {Doctor}
    */
-  // public async get(query: IQueryGet): Promise<Nullable<IUserModel>> {
-  //   console.log('UserRepository - Get: ', query);
+  // public async get(query: IQueryGet): Promise<Nullable<IDoctorModel>> {
+  //   console.log('DoctorRepository - Get: ', query);
   //   return super.getByQuery(query);
   // }
 
-  public async getQuery(options: IQueryList): Promise<IUserModel[]> {
-    console.log('User - Get query: ', options);
+  public async getQuery(options: IQueryList): Promise<IDoctorModel[]> {
+    console.log('Doctor - Get query: ', options);
     return super.getAll(options, {});
   }
 
   /**
-   * Create new user
+   * Create new doctor
    * @property {string} name - The name of record.
-   * @returns {User}
+   * @returns {Doctor}
    */
-  public async create(options: IQueryCreate): Promise<IUserModel> {
-    console.log('UserRepository - Create: ');
+  public async create(options: IQueryCreate): Promise<IDoctorModel> {
+    console.log('DoctorRepository - Create: ');
     return super.create(options);
   }
 
-  // public async update(options: IQueryUpdate): Promise<IUserModel> {
-  //   console.log('UserRepository - update', options);
+  // public async update(options: IQueryUpdate): Promise<IDoctorModel> {
+  //   console.log('DoctorRepository - update', options);
   //   const id = options.id;
   //   delete options.id;
   //   return super.update({ ...options, originalId: id });
   // }
 
   /**
-   * Delete user
+   * Delete doctor
    * @property {string} body.name - The name of record.
-   * @returns {User}
+   * @returns {Doctor}
    */
-  // public async delete(query: IQueryDelete): Promise<IUserModel> {
-  //   console.log('UserRepository - Delete: ');
+  // public async delete(query: IQueryDelete): Promise<IDoctorModel> {
+  //   console.log('DoctorRepository - Delete: ');
   //   return super.remove(query.id);
   // }
 }

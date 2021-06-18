@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 
+import { SUCCESS_MSG } from '../../libs/constants';
 import successHandler from '../../middlewares/successHandler';
 import { DoctorService } from '../../services';
-import { SUCCESS_MSG } from '../../libs/constants';
 
 class DoctorController {
   public static getInstance() {
@@ -47,17 +47,17 @@ class DoctorController {
    * @param {string} id - Id of Doctor
    * @returns {IDoctor}
    */
-  public async get(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const result = await DoctorController.getInstance().doctorService.get({
-        originalId: id,
-      });
-      return res.send(successHandler(SUCCESS_MSG.FETCH, result));
-    } catch (error) {
-      next(error);
-    }
-  }
+  // public async get(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { id } = req.params;
+  //     const result = await DoctorController.getInstance().doctorService.get({
+  //       originalId: id,
+  //     });
+  //     return res.send(successHandler(SUCCESS_MSG.FETCH, result));
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 
   /**
    * Create new Doctor
@@ -89,16 +89,16 @@ class DoctorController {
    * @param {string} stackId - Id of Stack
    * @returns {IDoctor}
    */
-     public async login(req: Request, res: Response, next: NextFunction) {
-      try {
-        console.log('DoctorController - login', req.body);
-        const query = JSON.parse(JSON.stringify(req.body));
-        const result = await DoctorController.getInstance().doctorService.login(query);
-        return res.send(successHandler(SUCCESS_MSG.CREATE, result));
-      } catch (error) {
-        next(error);
-      }
-    }
+    //  public async login(req: Request, res: Response, next: NextFunction) {
+    //   try {
+    //     console.log('DoctorController - login', req.body);
+    //     const query = JSON.parse(JSON.stringify(req.body));
+    //     const result = await DoctorController.getInstance().doctorService.login(query);
+    //     return res.send(successHandler(SUCCESS_MSG.CREATE, result));
+    //   } catch (error) {
+    //     next(error);
+    //   }
+    // }
 
   /**
    * Update the Doctor
@@ -106,37 +106,37 @@ class DoctorController {
    * @param {string} fieldsResponse - FieldsResponse of Doctor
    * @returns {IDoctor}
    */
-  public async update(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const data = JSON.parse(JSON.stringify(req.body));
-      const result = await DoctorController.getInstance().doctorService.update({
-        ...data,
-        id,
-      });
-      return res.send(successHandler(SUCCESS_MSG.UPDATE, result));
-    } catch (error) {
-      console.log('eeeeeeeeeeee', error);
-      next(error);
-    }
-  }
+  // public async update(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { id } = req.params;
+  //     const data = JSON.parse(JSON.stringify(req.body));
+  //     const result = await DoctorController.getInstance().doctorService.update({
+  //       ...data,
+  //       id,
+  //     });
+  //     return res.send(successHandler(SUCCESS_MSG.UPDATE, result));
+  //   } catch (error) {
+  //     console.log('eeeeeeeeeeee', error);
+  //     next(error);
+  //   }
+  // }
 
-  /**
-   * Delete the Doctor
-   * @param {string} id - Id of Doctor
-   * @returns {IDoctor}
-   */
-  public async delete(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const result = await DoctorController.getInstance().doctorService.delete({
-        id,
-      });
-      return res.send(successHandler(SUCCESS_MSG.DELETE, result));
-    } catch (error) {
-      next(error);
-    }
-  }
+  // /**
+  //  * Delete the Doctor
+  //  * @param {string} id - Id of Doctor
+  //  * @returns {IDoctor}
+  //  */
+  // public async delete(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { id } = req.params;
+  //     const result = await DoctorController.getInstance().doctorService.delete({
+  //       id,
+  //     });
+  //     return res.send(successHandler(SUCCESS_MSG.DELETE, result));
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 }
 
 export default DoctorController.getInstance();

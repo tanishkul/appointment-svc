@@ -47,17 +47,17 @@ class UserController {
    * @param {string} id - Id of User
    * @returns {IUser}
    */
-  public async get(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const result = await UserController.getInstance().userService.get({
-        originalId: id,
-      });
-      return res.send(successHandler(SUCCESS_MSG.FETCH, result));
-    } catch (error) {
-      next(error);
-    }
-  }
+  // public async get(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { id } = req.params;
+  //     const result = await UserController.getInstance().userService.get({
+  //       originalId: id,
+  //     });
+  //     return res.send(successHandler(SUCCESS_MSG.FETCH, result));
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 
   /**
    * Create new User
@@ -89,16 +89,16 @@ class UserController {
    * @param {string} stackId - Id of Stack
    * @returns {IUser}
    */
-     public async login(req: Request, res: Response, next: NextFunction) {
-      try {
-        console.log('UserController - login', req.body);
-        const query = JSON.parse(JSON.stringify(req.body));
-        const result = await UserController.getInstance().userService.login(query);
-        return res.send(successHandler(SUCCESS_MSG.CREATE, result));
-      } catch (error) {
-        next(error);
-      }
-    }
+    //  public async login(req: Request, res: Response, next: NextFunction) {
+    //   try {
+    //     console.log('UserController - login', req.body);
+    //     const query = JSON.parse(JSON.stringify(req.body));
+    //     const result = await UserController.getInstance().userService.login(query);
+    //     return res.send(successHandler(SUCCESS_MSG.CREATE, result));
+    //   } catch (error) {
+    //     next(error);
+    //   }
+    // }
 
   /**
    * Update the User
@@ -106,37 +106,37 @@ class UserController {
    * @param {string} fieldsResponse - FieldsResponse of User
    * @returns {IUser}
    */
-  public async update(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const data = JSON.parse(JSON.stringify(req.body));
-      const result = await UserController.getInstance().userService.update({
-        ...data,
-        id,
-      });
-      return res.send(successHandler(SUCCESS_MSG.UPDATE, result));
-    } catch (error) {
-      console.log('eeeeeeeeeeee', error);
-      next(error);
-    }
-  }
+  // public async update(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { id } = req.params;
+  //     const data = JSON.parse(JSON.stringify(req.body));
+  //     const result = await UserController.getInstance().userService.update({
+  //       ...data,
+  //       id,
+  //     });
+  //     return res.send(successHandler(SUCCESS_MSG.UPDATE, result));
+  //   } catch (error) {
+  //     console.log('eeeeeeeeeeee', error);
+  //     next(error);
+  //   }
+  // }
 
   /**
    * Delete the User
    * @param {string} id - Id of User
    * @returns {IUser}
    */
-  public async delete(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const result = await UserController.getInstance().userService.delete({
-        id,
-      });
-      return res.send(successHandler(SUCCESS_MSG.DELETE, result));
-    } catch (error) {
-      next(error);
-    }
-  }
+  // public async delete(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { id } = req.params;
+  //     const result = await UserController.getInstance().userService.delete({
+  //       id,
+  //     });
+  //     return res.send(successHandler(SUCCESS_MSG.DELETE, result));
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 }
 
 export default UserController.getInstance();

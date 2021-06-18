@@ -1,54 +1,35 @@
-import UserRepository from '../../repositories/business/user/repository';
 import {
   ERR_MSG,
   ErrorParameter,
   RequestParameter,
-} from './../../libs/constants';
-import { createErrorResponse } from './../../libs/utilities';
+} from '../../libs/constants';
+import { createErrorResponse } from '../../libs/utilities';
+import EventRepository from '../../repositories/business/event/repository';
 
-class UserService {
-  private userRepository: UserRepository;
+class EventService {
+  private eventRepository: EventRepository;
 
   public constructor() {
-    this.userRepository = new UserRepository();
+    this.eventRepository = new EventRepository();
   }
   public async list(limit?: number, skip?: number) {
-    return this.userRepository.list({ limit, skip });
+    return this.eventRepository.list({ limit, skip });
   }
 
   // public async get(query: any) {
   //   const { originalId } = query;
   //   let error = [];
-  //   const result = await this.userRepository.get(query);
+  //   const result = await this.eventRepository.get(query);
   //   if (!result) {
   //     error = createErrorResponse(
   //       RequestParameter.QUERY,
-  //       ErrorParameter.NO_USER,
+  //       ErrorParameter.NO_CART,
   //       ErrorParameter.ID,
   //       originalId,
   //     );
   //     throw {
   //       data: error,
-  //       message: ERR_MSG.USER_DOES_NOT_EXIST,
-  //       type: 'BadRequestError',
-  //     };
-  //   }
-  //   return result;
-  // }
-
-  // public async getByQuery(query: any) {
-  //   let error = [];
-  //   const result = await this.userRepository.get(query);
-  //   if (!result) {
-  //     error = createErrorResponse(
-  //       RequestParameter.QUERY,
-  //       ErrorParameter.NO_USER,
-  //       '',
-  //       '',
-  //     );
-  //     throw {
-  //       data: error,
-  //       message: ERR_MSG.USER_DOES_NOT_EXIST,
+  //       message: ERR_MSG.CART_DOES_NOT_EXIST,
   //       type: 'BadRequestError',
   //     };
   //   }
@@ -56,14 +37,15 @@ class UserService {
   // }
 
   public async create(query: any) {
-    return await this.userRepository.create(query);
+    return await this.eventRepository.create(query);
   }
 
-  // public async login(query: any) {
+  // public async update(query: any) {
   //   let error = [];
-  //   const user = await this.getByQuery(query);
+  //   await this.get({ originalId: query.id });
+  //   const result = await this.eventRepository.update(query);
 
-  //   if (!user) {
+  //   if (!result) {
   //     error = createErrorResponse(
   //       RequestParameter.BODY,
   //       ErrorParameter.SOMETHING_WENT_BAD,
@@ -72,18 +54,18 @@ class UserService {
   //     );
   //     throw {
   //       data: error,
-  //       message: ERR_MSG.DATA_NOT_FOUND,
+  //       message: ERR_MSG.UNABLE_TO_UPDATE,
   //       type: 'BadRequestError',
   //     };
   //   }
 
-  //   return user;
+  //   return result;
   // }
 
-  // public async update(query: any) {
+  // public async emptyCart(query: any) {
   //   let error = [];
   //   await this.get({ originalId: query.id });
-  //   const result = await this.userRepository.update(query);
+  //   const result = await this.eventRepository.update({ ...query, event: [] });
 
   //   if (!result) {
   //     error = createErrorResponse(
@@ -106,7 +88,7 @@ class UserService {
   //   const { id } = query;
   //   let error = [];
   //   await this.get({ originalId: id });
-  //   const result = await this.userRepository.delete({ id });
+  //   const result = await this.eventRepository.delete({ id });
   //   if (!result) {
   //     error = createErrorResponse(
   //       RequestParameter.BODY,
@@ -124,4 +106,4 @@ class UserService {
   // }
 }
 
-export default UserService;
+export default EventService;

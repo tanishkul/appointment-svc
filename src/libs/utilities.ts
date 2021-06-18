@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import * as mongoose from 'mongoose';
 
 import errorResponse from '../libs/errors/errorResponse';
@@ -26,14 +27,6 @@ export function getEnumKeyOrValue(enums: any, enumKeyOrValue: any): string {
   return enums[enumKeyOrValue];
 }
 
-export const changeName = (name) => {
-  const newName = name.split(/_(.+)/)[1];
-  if (newName) {
-    return newName;
-  }
-  return name;
-};
-
 export const checkType = (value: any, type: string): boolean => {
   if (typeof value === type) {
     return true;
@@ -58,80 +51,20 @@ export const createErrorResponse = (
   return error;
 };
 
-export const removeSpaceFromName = (name) => name.split(' ').join('_');
+export const formatDate = (date) => {
+  const d = new Date(date);
+  let month = '' + (d.getMonth() + 1);
+  let day = '' + d.getDate();
+  const year = d.getFullYear();
 
-export const requestObjectForDAG = (
-  connection,
-  dbConfig,
-  schedule,
-  dataStreamType,
-  dataStream,
-) => {
-  // tslint:disable:variable-name
-  const { name, id: connection_id } = connection;
-  const {
-    cron_interval_start,
-    cron_interval,
-    cron_start_of_day,
-    cron_type,
-    lookback_type,
-    lookback_window,
-    offset,
-  } = schedule;
-  const { tenantId, subTenantId, clientId, marketCode } = dbConfig;
-  const { slug: data_source, adverityId } = dataStreamType;
-  const { id, slug } = dataStream;
-
-  const template = {
-    account: removeSpaceFromName(name),
-    client: clientId,
-    connection: removeSpaceFromName(name),
-    connection_id,
-    cron_interval,
-    cron_interval_start,
-    cron_start_of_day,
-    cron_type,
-    data_source,
-    data_source_id: adverityId,
-    data_stream_id: id,
-    data_stream_name: slug,
-    lookback_type,
-    lookback_window,
-    market: marketCode,
-    offset,
-    subtenant_id: subTenantId,
-    tenant_id: tenantId,
-  };
-  return template;
-};
-
-export const getSchedulesString = (schedule: any) => {
-  const {
-    cron_type = '',
-    cron_interval = '',
-    cron_interval_start = '',
-    cron_start_of_day = '',
-  } = schedule;
-
-  const time = cron_start_of_day.split(':');
-  switch (cron_type) {
-    case 'minute':
-      return `*/${cron_interval} * * * *`;
-    case 'hour':
-      return `0 */${cron_interval_start} * * *`;
-    case 'day':
-      return `${time[1]} ${time[0]} */${cron_interval} * *`;
-    case 'week':
-      if (cron_interval === 1) {
-        return `${time[1]} ${time[0]} * * ${cron_interval_start}`;
-      } else if (cron_interval === 2) {
-        return `${time[1]} ${time[0]} */14 * ${cron_interval_start}`;
-      }
-      return `${time[1]} ${time[0]} */28 * ${cron_interval_start}`;
-    case 'month':
-      return `${time[1]} ${time[0]} ${cron_interval_start} */${cron_interval} *`;
-    case 'year':
-      return `0 0 1 1 *`;
+  if (month.length < 2) {
+      month = '0' + month;
   }
-  return '* * * * *';
+  if (day.length < 2) {
+      day = '0' + day;
+  }
+
+  return [day, month, year].join('-');
 };
+
+console.log(formatDate(moment().format()));

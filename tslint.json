@@ -67,11 +67,5 @@
       false
     ]
   },
-  "rulesDirectory": [],
-  "linterOptions": {
-    "exclude": [
-      "**/*.json",
-      "**/*.js"
-    ]
-  }
+  "rulesDirectory": []
 }

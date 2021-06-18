@@ -7,8 +7,9 @@ import * as helmet from 'helmet';
 import * as methodOverride from 'method-override';
 import MongoMemoryServer from 'mongodb-memory-server';
 import * as morganBody from 'morgan-body';
-
+import * as moment from 'moment';
 import { EnvVars } from './libs/constants';
+import { formatDate } from './libs/utilities';
 import Database from './libs/Database';
 import { errorHandler, notFoundRoute } from './libs/routes';
 import router from './router';
@@ -70,6 +71,7 @@ export default class Server {
           console.info(message);
           console.info(message.replace(/[^]/g, '-'));
           console.info('Press CTRL-C to stop\n');
+          console.log(formatDate(moment().format()));
         });
       })
       .catch(() => {

@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-
+import seed from './Seeding';
 export interface IDatabaseConfig {
   mongoUri: string;
 }
@@ -11,7 +11,7 @@ export default class Database {
       const options = {
         autoIndex: false, // Don't build indexes
         bufferMaxEntries: 0,
-        keepAlive: 1,
+        keepAlive: true,
         poolSize: 10, // Maintain up to 10 socket connections
         reconnectInterval: 500, // Reconnect every 500ms
         reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect

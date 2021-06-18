@@ -1,7 +1,9 @@
-import productRouter from './products/route';
+import doctorRouter from './doctors/route';
+import eventRouter from './events/route';
 import userRouter from './users/route';
 
 export {
-  productRouter,
+  doctorRouter,
   userRouter,
+  eventRouter,
 };

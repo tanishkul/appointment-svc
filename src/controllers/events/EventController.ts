@@ -26,17 +26,17 @@ class EventController {
    * @param {string} id - Id of Event
    * @returns {IEvent}
    */
-  public async getCart(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const result = await EventController.getInstance().eventService.get({
-        originalId: id,
-      });
-      return res.send(successHandler(SUCCESS_MSG.FETCH, result));
-    } catch (error) {
-      next(error);
-    }
-  }
+  // public async getCart(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { id } = req.params;
+  //     const result = await EventController.getInstance().eventService.get({
+  //       originalId: id,
+  //     });
+  //     return res.send(successHandler(SUCCESS_MSG.FETCH, result));
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 
   /**
    * Update the Event
@@ -71,19 +71,19 @@ class EventController {
    * @param {string} fieldsResponse - FieldsResponse of Event
    * @returns {IEvent}
    */
-  public async emptyCart(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { id } = req.params;
-      const data = JSON.parse(JSON.stringify(req.body));
-      const result = await EventController.getInstance().eventService.emptyCart({
-        ...data,
-        id,
-      });
-      return res.send(successHandler(SUCCESS_MSG.UPDATE, result));
-    } catch (error) {
-      next(error);
-    }
-  }
+  // public async emptyCart(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     const { id } = req.params;
+  //     const data = JSON.parse(JSON.stringify(req.body));
+  //     const result = await EventController.getInstance().eventService.emptyCart({
+  //       ...data,
+  //       id,
+  //     });
+  //     return res.send(successHandler(SUCCESS_MSG.UPDATE, result));
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 }
 
 export default EventController.getInstance();

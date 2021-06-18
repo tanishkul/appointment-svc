@@ -71,7 +71,6 @@ export default class Server {
           console.info(message);
           console.info(message.replace(/[^]/g, '-'));
           console.info('Press CTRL-C to stop\n');
-          console.log(formatDate(moment().format()));
         });
       })
       .catch(() => {

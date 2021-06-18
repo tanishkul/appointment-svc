@@ -12,6 +12,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": ".",
+    "rootDir": "./",
     "paths": {
       "*": [
         "node_modules/*",
@@ -23,10 +24,6 @@
   "exclude": ["dist"],
   "include": [
     "src",
-    "node_modules/@gdo-enablers/dan-auth-mdw-me",
-    "node_modules/@gdo-enablers/dan-logger",
-    "src/scripts/backups",
-    "src/**/**/*.js"
   ],
   "types": ["src/types"],
   "lib":["dom","es2017"],

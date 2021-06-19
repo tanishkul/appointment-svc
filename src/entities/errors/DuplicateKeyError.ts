@@ -11,10 +11,10 @@ export default class DuplicateKeyError extends DBError {
           location: column,
           msg: 'One record with this name already exist and it can not be duplicated.',
           param: column,
-          value
-        }
+          value,
+        },
       ],
-      DuplicateKeyError.name
+      DuplicateKeyError.name,
     );
   }
 }

@@ -44,7 +44,7 @@ export default class EventRepository extends VersioningRepository<
   //   return super.getByQuery(query);
   // }
 
-  public async getQuery(options: IQueryList): Promise<IEventModel[]> {
+  public async getQuery(options: any): Promise<IEventModel[]> {
     console.log('Event - Get query: ', options);
     return super.getAll(options, {});
   }
@@ -54,7 +54,7 @@ export default class EventRepository extends VersioningRepository<
    * @property {string} name - The name of record.
    * @returns {Event}
    */
-  public async create(options: IQueryCreate): Promise<IEventModel> {
+  public async create(options: any): Promise<IEventModel> {
     console.log('EventRepository - Create: ');
     return super.create(options);
   }

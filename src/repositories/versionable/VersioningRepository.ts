@@ -34,6 +34,19 @@ export default class VersionableRepository<
     return this.assignId(leanObject(result.toObject()));
   }
 
+  /**
+   * Insert Many
+   * @returns {Documents[]}
+   */
+    public async insertMany(docs: IQueryBaseCreate[], options?: any | null) {
+      console.log('BaseRepository - insertMany');
+      const docsToInsert: any = docs.map((item) => {
+        const id = item.id ? item.id : generateObjectId();
+        return { ...item, _id: id, originalId: id };
+      });
+      return this.modelType.insertMany(docsToInsert, options);
+    }
+
   // public async update(options: IQueryBaseUpdate): Promise<D> {
   //   console.log('BaseRepository - Update:', JSON.stringify(options));
   //   console.log('Searching for previous valid object...', options.originalId);

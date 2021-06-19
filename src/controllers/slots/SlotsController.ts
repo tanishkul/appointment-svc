@@ -1,35 +1,35 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { SUCCESS_MSG } from '../../libs/constants';
 import successHandler from '../../middlewares/successHandler';
-import { DoctorService } from '../../services';
+import { SlotsService } from '../../services';
+import { SUCCESS_MSG } from '../../libs/constants';
 
-class DoctorController {
+class SlotsController {
   public static getInstance() {
-    if (!DoctorController.instance) {
-      DoctorController.instance = new DoctorController();
+    if (!SlotsController.instance) {
+      SlotsController.instance = new SlotsController();
     }
 
-    return DoctorController.instance;
+    return SlotsController.instance;
   }
-  private static instance: DoctorController;
-  private doctorService: DoctorService;
+  private static instance: SlotsController;
+  private slotsService: SlotsService;
 
   /* tslint:disable: no-null-keyword */
   private constructor() {
-    this.doctorService = new DoctorService();
+    this.slotsService = new SlotsService();
   }
 
   /**
-   * Get Doctor list.
-   * @param {number} skip - Number of Doctor to be skipped.
-   * @param {number} limit - Limit number of Doctor to be returned.
-   * @returns {IDoctor[]}
+   * Get User list.
+   * @param {number} skip - Number of User to be skipped.
+   * @param {number} limit - Limit number of User to be returned.
+   * @returns {IUser[]}
    */
   public async list(req: Request, res: Response, next: NextFunction) {
     try {
       const { limit, skip } = req.query as any;
-      const result = await DoctorController.getInstance().doctorService.list(
+      const result = await SlotsController.getInstance().slotsService.list(
         limit,
         skip,
       );
@@ -43,14 +43,14 @@ class DoctorController {
   }
 
   /**
-   * Get Doctor
-   * @param {string} id - Id of Doctor
-   * @returns {IDoctor}
+   * Get User
+   * @param {string} id - Id of User
+   * @returns {IUser}
    */
   // public async get(req: Request, res: Response, next: NextFunction) {
   //   try {
   //     const { id } = req.params;
-  //     const result = await DoctorController.getInstance().doctorService.get({
+  //     const result = await SlotsController.getInstance().slotsService.get({
   //       originalId: id,
   //     });
   //     return res.send(successHandler(SUCCESS_MSG.FETCH, result));
@@ -60,17 +60,17 @@ class DoctorController {
   // }
 
   /**
-   * Create new Doctor
-   * @param {string} fieldsResponse - FieldsResponse of Doctor
-   * @param {string} id - Id of Doctor Type
+   * Create new User
+   * @param {string} fieldsResponse - FieldsResponse of User
+   * @param {string} id - Id of User Type
    * @param {string} stackId - Id of Stack
-   * @returns {IDoctor}
+   * @returns {IUser}
    */
   public async create(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log('DoctorController - create', req.body);
+      console.log('SlotsController - create', req.body);
       const { name, email, password, role = 'CUSTOMER' } = req.body;
-      const result = await DoctorController.getInstance().doctorService.create({
+      const result = await SlotsController.getInstance().slotsService.create({
         email,
         name,
         password,
@@ -83,17 +83,17 @@ class DoctorController {
   }
 
   /**
-   * Login existing Doctor
-   * @param {string} fieldsResponse - FieldsResponse of Doctor
-   * @param {string} id - Id of Doctor Type
+   * Login existing User
+   * @param {string} fieldsResponse - FieldsResponse of User
+   * @param {string} id - Id of User Type
    * @param {string} stackId - Id of Stack
-   * @returns {IDoctor}
+   * @returns {IUser}
    */
     //  public async login(req: Request, res: Response, next: NextFunction) {
     //   try {
-    //     console.log('DoctorController - login', req.body);
+    //     console.log('SlotsController - login', req.body);
     //     const query = JSON.parse(JSON.stringify(req.body));
-    //     const result = await DoctorController.getInstance().doctorService.login(query);
+    //     const result = await SlotsController.getInstance().slotsService.login(query);
     //     return res.send(successHandler(SUCCESS_MSG.CREATE, result));
     //   } catch (error) {
     //     next(error);
@@ -101,16 +101,16 @@ class DoctorController {
     // }
 
   /**
-   * Update the Doctor
-   * @param {string} id - Id of Doctor
-   * @param {string} fieldsResponse - FieldsResponse of Doctor
-   * @returns {IDoctor}
+   * Update the User
+   * @param {string} id - Id of User
+   * @param {string} fieldsResponse - FieldsResponse of User
+   * @returns {IUser}
    */
   // public async update(req: Request, res: Response, next: NextFunction) {
   //   try {
   //     const { id } = req.params;
   //     const data = JSON.parse(JSON.stringify(req.body));
-  //     const result = await DoctorController.getInstance().doctorService.update({
+  //     const result = await SlotsController.getInstance().slotsService.update({
   //       ...data,
   //       id,
   //     });
@@ -121,15 +121,15 @@ class DoctorController {
   //   }
   // }
 
-  // /**
-  //  * Delete the Doctor
-  //  * @param {string} id - Id of Doctor
-  //  * @returns {IDoctor}
-  //  */
+  /**
+   * Delete the User
+   * @param {string} id - Id of User
+   * @returns {IUser}
+   */
   // public async delete(req: Request, res: Response, next: NextFunction) {
   //   try {
   //     const { id } = req.params;
-  //     const result = await DoctorController.getInstance().doctorService.delete({
+  //     const result = await SlotsController.getInstance().slotsService.delete({
   //       id,
   //     });
   //     return res.send(successHandler(SUCCESS_MSG.DELETE, result));
@@ -139,4 +139,4 @@ class DoctorController {
   // }
 }
 
-export default DoctorController.getInstance();
+export default SlotsController.getInstance();

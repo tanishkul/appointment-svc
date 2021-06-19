@@ -1,16 +1,25 @@
 import VersionableSchema from '../../versionable/VersionableSchema';
 
-export default class UserSchema extends VersionableSchema {
+export default class SlotsSchema extends VersionableSchema {
   constructor(options: any, collections: any) {
     const baseSchema = {
       ...options,
+      booked: {
+        default: false,
+        required: true,
+        type: Boolean,
+      },
+      bookingId: {
+        required: true,
+        type: String,
+      },
       id: {
         required: false,
         type: String,
       },
-      name: {
+      time: {
         required: true,
-        type: String,
+        type: Date,
       },
     };
     super(baseSchema, collections);

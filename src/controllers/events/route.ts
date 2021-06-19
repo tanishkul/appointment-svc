@@ -6,20 +6,16 @@ import validation from './validation';
 
 const router = Router();
 
-// router.route('/').get(...validationHandler(validation.list), eventController.list);
+router
+  .route('/')
+  .post(...validationHandler(validation.create), eventController.createEvents);
 
-// router
-//   .route('/:id')
-//   .get(...validationHandler(validation.get), eventController.getCart);
+router
+  .route('/free/')
+  .post(eventController.getFreeSlots);
 
-// router.route('/').post(...validationHandler(validation.create), eventController.create);
-
-// router
-//   .route('/add/:id')
-//   .put(...validationHandler(validation.update), eventController.addItemToCart);
-
-// router
-//   .route('/empty/:id')
-//   .put(...validationHandler(validation.update), eventController.emptyCart);
+router
+  .route('/booked/')
+  .post(eventController.getBookedEvents);
 
 export default router;

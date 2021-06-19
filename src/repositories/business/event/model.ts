@@ -8,14 +8,14 @@ export const eventSchema = new EventSchema(
     _id: String,
   },
   {
-    collection: 'event',
+    collection: 'events',
     versionKey: false,
   },
 );
 
 export const eventModel: mongoose.Model<IEventModel> = mongoose.model<IEventModel>(
-  'event',
+  'events',
   eventSchema,
-  'event',
+  'events',
   true,
 );

@@ -6,37 +6,32 @@ const listValidation = {
   ...limitSkipValidation,
 };
 
-const createValidation = {
-  description: {
+const createEventsValidation = {
+  dateTime: {
     custom: {
-      errorMessage: 'description should be string',
+      errorMessage: 'dateTime should be in ISO string!',
       options: (value: string) => {
-        return value ? checkType(value, 'string') : true;
+        if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(value)) {
+          return false;
+        }
+        const d = new Date(value);
+        return d.toISOString() === value;
       },
+    },
+    exists: {
+      errorMessage: 'Please Provide dateTime!',
     },
     in: [RequestParameter.BODY],
   },
-  price: {
+  duration: {
     custom: {
-      errorMessage: 'price should be number',
+      errorMessage: 'duration should be integer!',
       options: (value: number) => {
         return checkType(value, 'number');
       },
     },
     exists: {
-      errorMessage: 'Please Provide price',
-    },
-    in: [RequestParameter.BODY],
-  },
-  title: {
-    custom: {
-      errorMessage: 'title should be string',
-      options: (value: string) => {
-        return checkType(value, 'string');
-      },
-    },
-    exists: {
-      errorMessage: 'Please Provide title',
+      errorMessage: 'Please Provide duration!',
     },
     in: [RequestParameter.BODY],
   },
@@ -78,7 +73,7 @@ const updateValidation = {
  * */
 export default Object.freeze({
   create: {
-    ...createValidation,
+    ...createEventsValidation,
   },
   delete: {
     ...idValidation,

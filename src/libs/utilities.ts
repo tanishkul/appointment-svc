@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as mongoose from 'mongoose';
-
+import config from '../config/configuration';
 import errorResponse from '../libs/errors/errorResponse';
 import IError from '../libs/errors/IError';
 
@@ -67,4 +67,23 @@ export const formatDate = (date) => {
   return [day, month, year].join('-');
 };
 
-console.log(formatDate(moment().format()));
+export const getAllSlots = (zone) => {
+  const { startHour, endHour, duration, timezone } = config;
+  const format = 'hh:mm';
+  const slotsArray = [];
+  let utcStartTime = new Date(moment.tz(startHour, format, timezone).utc().format());
+  slotsArray.push({
+    date: utcStartTime,
+    timestamp: utcStartTime.getTime(),
+    zoneTime: moment(utcStartTime.getTime()).tz(zone).format(),
+  });
+  const utcEndTime = new Date(moment.tz(endHour, format, timezone).utc().format());
+
+  while (utcStartTime < utcEndTime) {
+    utcStartTime = moment(utcStartTime).add(duration, 'm').toDate();
+    const zoneTime = moment(utcStartTime.getTime()).tz(zone).format();
+    slotsArray.push({ date: utcStartTime, zoneTime, timestamp: utcStartTime.getTime() });
+  }
+  slotsArray.pop();
+  return slotsArray;
+};

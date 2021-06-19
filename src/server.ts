@@ -51,6 +51,7 @@ export default class Server {
    */
   public setupRoutes() {
     const { env, apiPrefix } = this.config;
+    console.log(env, apiPrefix);
     const stack = env === EnvVars.DEV || env === EnvVars.TEST;
     this.app.use(apiPrefix, router);
     this.app.use(notFoundRoute);
@@ -63,6 +64,7 @@ export default class Server {
    */
   public run() {
     const { port, env, mongo } = this.config;
+    console.log(port, env, mongo);
     Database.open({ mongoUri: mongo })
       .then(() => {
         this.app.listen(port, () => {

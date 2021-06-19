@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import * as moment from 'moment';
-
+import config from '../../config/configuration';
 import { SUCCESS_MSG } from '../../libs/constants';
+import { formatDate } from '../../libs/utilities';
 import successHandler from '../../middlewares/successHandler';
-import { EventService, DoctorService } from '../../services';
+import { EventService } from '../../services';
 
 class EventController {
   public static getInstance() {
@@ -26,40 +27,13 @@ class EventController {
    * @param {string} id - Id of Event
    * @returns {IEvent}
    */
-  // public async getCart(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id } = req.params;
-  //     const result = await EventController.getInstance().eventService.get({
-  //       originalId: id,
-  //     });
-  //     return res.send(successHandler(SUCCESS_MSG.FETCH, result));
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
-
-  /**
-   * Update the Event
-   * @param {string} id - Id of Event
-   * @param {string} fieldsResponse - FieldsResponse of Event
-   * @returns {IEvent}
-   */
-  public async createEvents(req: Request, res: Response, next: NextFunction) {
+  public async getFreeSlots(req: Request, res: Response, next: NextFunction) {
     try {
-      const { dateTime, duration } = req.body;
-      const utcStartTime = dateTime.toUTCString();
-      const utcEndTime = moment(utcStartTime).add(duration, 'minutes');
-      const doctorId = '123';
-      const userId = '123';
-      const result = await EventController.getInstance().eventService.create({
-        doctorId: '123',
-        events: [{
-          endTime: utcEndTime,
-          startTime: utcStartTime,
-        }],
-        userId: '123',
+      const { date, timezone } = req.body;
+      const result = await EventController.getInstance().eventService.getFreeSlots({
+        date, timezone,
       });
-      return res.send(successHandler(SUCCESS_MSG.UPDATE, result));
+      return res.send(successHandler(SUCCESS_MSG.FETCH, result));
     } catch (error) {
       next(error);
     }
@@ -71,19 +45,33 @@ class EventController {
    * @param {string} fieldsResponse - FieldsResponse of Event
    * @returns {IEvent}
    */
-  // public async emptyCart(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id } = req.params;
-  //     const data = JSON.parse(JSON.stringify(req.body));
-  //     const result = await EventController.getInstance().eventService.emptyCart({
-  //       ...data,
-  //       id,
-  //     });
-  //     return res.send(successHandler(SUCCESS_MSG.UPDATE, result));
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  public async createEvents(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { dateTime: startTime, duration } = req.body;
+      const utcStartTime = moment(startTime).toDate();
+      const utcEndTime =  moment(startTime).add(duration, 'm').toDate();
+      const result = await EventController.getInstance().eventService.create({
+        endTime: utcEndTime,
+        startTime: utcStartTime,
+      });
+      return res.send(successHandler(SUCCESS_MSG.CREATE, result));
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async getBookedEvents(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { startDate, endDate } = req.body;
+      const result = await EventController.getInstance().eventService.getBookedEvents({
+        endDate, startDate,
+      });
+      return res.send(successHandler(SUCCESS_MSG.FETCH, result));
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }
 
 export default EventController.getInstance();

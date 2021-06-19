@@ -6,22 +6,24 @@ export default class EventSchema extends VersionableSchema {
   constructor(options: any, collections: any) {
     const baseSchema = {
       ...options,
-      doctorId: {
-        required: true,
-        type: String,
+      start: {
+        type: Number,
       },
-      events: {
-        required: false,
-        type: Schema.Types.Mixed,
+      end: {
+        type: Number,
+      },
+      endTime: {
+        required: true,
+        type: Date,
       },
       id: {
-        required: true,
+        required: false,
         type: String,
       },
-      userId: {
-        required: true,
-        type: String,
-      },
+      startTime: {
+        required: false,
+        type: Date,
+      }
     };
     super(baseSchema, collections);
   }

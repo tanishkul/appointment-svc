@@ -20,7 +20,7 @@ import IResponse from '../../entities/responses/IResponse';
 import { EnvVars, StatusCodes } from '../../libs/constants';
 
 export default function errorHandler(env: string) {
-  return function(err: any, req: any, res: any, next: any) {
+  return (err: any, req: any, res: any, next: any) => {
     if (env !== EnvVars.TEST) {
       console.error(err);
     }

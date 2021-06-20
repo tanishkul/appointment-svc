@@ -69,6 +69,7 @@
     "sinon": "7.3.2",
     "swagger-jsdoc": "1.9.7",
     "swagger-ui-express": "3.0.10",
+    "tsc-watch": "1.0.26",
     "yarn": "1.12.3"
   },
   "devDependencies": {

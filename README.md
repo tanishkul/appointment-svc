@@ -24,13 +24,13 @@ END_HOUR=17:00
 DURATION=30
 TIMEZONE=Asia/Kolkata
 ```
-- NODE_ENV is the node environment.
-- PORT is the port number on which the node server will be running.
-- MONGO_URL is the mongoDB connection string.
-- START_HOUR is the starting time of availability. Format- "HH-MM"
-- END_HOUR is the ending time of availability. Format- "HH-MM"
-- DURATION is the duration of slot. It should be in minutes.
-- TIMEZONE is the timezone name.
+- **NODE_ENV** is the node environment.
+- **PORT** is the port number on which the node server will be running.
+- **MONGO_URL** is the mongoDB connection string.
+- **START_HOUR** is the starting time of availability. Format- "HH-MM"
+- **END_HOUR** is the ending time of availability. Format- "HH-MM"
+- **DURATION** is the duration of slot. It should be in minutes.
+- **TIMEZONE** is the timezone name.
 
 **STEP 4:** Start the service, using this command:
 ```sh
@@ -45,7 +45,8 @@ Your app should now be running on [localhost:9000](http://localhost:9000/api/).
 ### 1. Free Slots
 **Request**
 
-`GET /api/events/` http://localhost:9000/api/events/?date=2021-06-19&timezone=asia/kolkata
+`GET /api/events/` https://appointment-svc.herokuapp.com/api/events/?date=2021-06-19&timezone=asia/kolkata<br>
+**For locally:** http://localhost:9000/api/events/?date=2021-06-19&timezone=asia/kolkata
 
 **Request Query Params**:<br>
 
@@ -82,7 +83,8 @@ Your app should now be running on [localhost:9000](http://localhost:9000/api/).
 ### 2. Create event
 **Request**
 
-`POST /api/events/` http://localhost:9000/api/events/
+`POST /api/events/` https://appointment-svc.herokuapp.com/api/events/<br>
+**For locally:** http://localhost:9000/api/events/
 
 **Request Body**:<br>
 
@@ -109,7 +111,8 @@ Your app should now be running on [localhost:9000](http://localhost:9000/api/).
 ### 3. Get events
 **Request**
 
-`POST /api/events/booked/` http://localhost:9000/api/events/booked/
+`POST /api/events/booked/` https://appointment-svc.herokuapp.com/api/events/booked/<br>
+**For locally:** http://localhost:9000/api/events/booked/
 
 **Request Body**:<br>
 

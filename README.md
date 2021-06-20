@@ -1,6 +1,9 @@
 # appointment-svc
 A Nodejs app using [Express 4](http://expressjs.com/).
 
+## Deployed Service
+**https://appointment-svc.herokuapp.com/api/events/**
+
 ## Running Locally
 
 **Step 1:** Make sure you have [Node.js](http://nodejs.org/) installed.

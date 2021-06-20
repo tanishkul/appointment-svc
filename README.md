@@ -147,3 +147,6 @@ Your app should now be running on [localhost:9000](http://localhost:9000/api/).
     "message": "Events fetched successfully",
     "status": "OK"
     }
+    
+## Database and query design
+  In this nodejs service, mongoose is used to save the events. This contains only one collection of events. In the events, dates are stored in the UTC format of time as well as in the timestamp format. When the user from different timezone hits the api, then the response will be converted to that timezone of the user/timezone in config.

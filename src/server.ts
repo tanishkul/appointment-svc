@@ -5,17 +5,15 @@ import * as cors from 'cors';
 import * as express from 'express';
 import * as helmet from 'helmet';
 import * as methodOverride from 'method-override';
-import MongoMemoryServer from 'mongodb-memory-server';
 import * as morganBody from 'morgan-body';
 
-import { EnvVars } from './libs/constants';
 import Database from './libs/Database';
 import { errorHandler, notFoundRoute } from './libs/routes';
+import Swagger from './libs/Swagger';
 import router from './router';
 
 export default class Server {
   private app: express.Express;
-  private mongoServer: MongoMemoryServer;
   constructor(private config: any) {
     this.app = express();
   }
@@ -29,7 +27,6 @@ export default class Server {
    * @returns -Instance of Current Object
    */
   public bootstrap() {
-    const { authProvider } = this.config;
     this.initHelmet();
     this.initCompress();
     this.initCookieParser();
@@ -37,6 +34,7 @@ export default class Server {
     this.initJsonParser();
     this.initMethodOverride();
     this.initConsole();
+    this.initSwagger();
     this.setupRoutes();
 
     return this.app;
@@ -50,7 +48,6 @@ export default class Server {
    */
   public setupRoutes() {
     const { env, apiPrefix } = this.config;
-    const stack = env === EnvVars.DEV || env === EnvVars.TEST;
     this.app.use(apiPrefix, router);
     this.app.use(notFoundRoute);
     this.app.use(errorHandler(env));
@@ -80,31 +77,6 @@ export default class Server {
     return this;
   }
 
-  /**
-   *
-   *
-   * @returns Promise
-   *
-   */
-  public async getTestDBConnectionString() {
-    this.mongoServer = new MongoMemoryServer();
-    return await this.mongoServer.getConnectionString();
-  }
-
-  /**
-   * Close the connected Database
-   *
-   * @returns Promise
-   * @memberof Server
-   */
-  public async closeDB() {
-    Database.close();
-  }
-
-  public async closeMongoServer() {
-    await this.closeDB();
-    return await this.mongoServer.stop();
-  }
   /**
    * Compression of the output
    */
@@ -156,5 +128,27 @@ export default class Server {
    */
   private initMethodOverride() {
     this.app.use(methodOverride());
+  }
+
+  /**
+   * Initialize Swagger
+   */
+   private initSwagger() {
+    const { swaggerDefinition, swaggerUrl } = this.config;
+
+    const swaggerSetup = new Swagger();
+
+    // JSON route
+    this.app.use(
+      `${swaggerUrl}.json`,
+      swaggerSetup.getRouter({
+        swaggerDefinition,
+      }),
+    );
+
+    // UI route
+    const { serve, setup } = swaggerSetup.getUI(swaggerUrl);
+
+    this.app.use(swaggerUrl, serve, setup);
   }
 }

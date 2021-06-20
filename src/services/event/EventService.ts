@@ -14,14 +14,9 @@ class EventService {
   public async create(query: any) {
     const { timezone, startHour, endHour } = config;
     const { startTime, endTime } = query;
-    const startTimeOfZone = moment(startTime.getTime())
-      .tz(timezone)
-      .format('HH:mm');
-    const endTimeOfZone = moment(endTime.getTime())
-      .tz(timezone)
-      .format('HH:mm');
+    const startTimeOfZone = moment(startTime.getTime()).tz(timezone).format('HH:mm');
+    const endTimeOfZone = moment(endTime.getTime()).tz(timezone).format('HH:mm');
 
-    console.log('Check for the startTime and endTime range::::');
     if (startHour <= startTimeOfZone && endHour >= endTimeOfZone) {
       const startEpoch = new Date(startTime).getTime();
       const endEpoch = new Date(endTime).getTime();

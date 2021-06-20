@@ -2,7 +2,7 @@
 A Nodejs app using [Express 4](http://expressjs.com/).
 
 ## Deployed Service
-**https://appointment-svc.herokuapp.com/api/events/**
+**https://appointment-svc.herokuapp.com/api/events/**<br>
 **SWAGGER URL: https://appointment-svc.herokuapp.com/api-docs/**
 
 ## Running Locally

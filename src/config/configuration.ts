@@ -10,13 +10,13 @@ const isMongooseDebug =
   envVars.NODE_ENV === constants.EnvVars.DEV;
 const configurations = Object.freeze({
   apiPrefix: constants.API_PREFIX,
-  duration: envVars.DURATION,
-  endHour: envVars.END_HOUR,
+  duration: envVars.DURATION || '30',
+  endHour: envVars.END_HOUR || '17:00',
   env: envVars.NODE_ENV || 'dev',
-  mongo: envVars.MONGO_URL,
+  mongo: envVars.MONGO_URL || 'mongodb+srv://m001-user:NvncCBKYQfCnQQS5@cluster0.adkbi.mongodb.net/appointment-db',
   mongooseDebug: isMongooseDebug,
-  port: envVars.PORT,
-  startHour: envVars.START_HOUR,
+  port: envVars.PORT || '9000',
+  startHour: envVars.START_HOUR || '10:00',
   swaggerDefinition: {
     basePath: constants.API_PREFIX,
     info: {
@@ -32,7 +32,7 @@ const configurations = Object.freeze({
     },
   },
   swaggerUrl: constants.SWAGGER_URL,
-  timezone: envVars.TIMEZONE,
+  timezone: envVars.TIMEZONE || 'America/Los_Angeles',
 }) as IConfig;
 
 export default configurations;

@@ -62,19 +62,20 @@ export default class Server {
    */
   public run() {
     const { port, env, mongo } = this.config;
-    Database.open({ mongoUri: mongo })
-      .then(() => {
-        this.app.listen(port, () => {
-          const message = `|| App is running at port '${port}' in '${env}' mode ||`;
-          console.info(message.replace(/[^]/g, '-'));
-          console.info(message);
-          console.info(message.replace(/[^]/g, '-'));
-          console.info('Press CTRL-C to stop\n');
+    this.app.listen(port, () => {
+      const message = `|| App is running at port '${port}' in '${env}' mode ||`;
+      console.info(message.replace(/[^]/g, '-'));
+      console.info(message);
+      console.info(message.replace(/[^]/g, '-'));
+      console.info('Press CTRL-C to stop\n');
+      Database.open({ mongoUri: mongo })
+        .then(() => {
+          console.info('::::Database connected::::');
+        })
+        .catch(() => {
+          console.log('Error in connection');
         });
-      })
-      .catch(() => {
-        console.log('Error in connection');
-      });
+    });
 
     return this;
   }

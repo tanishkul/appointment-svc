@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 import { generateObjectId, leanObject } from '../../libs/utilities';
-import { IQueryBaseCreate, IQueryBaseUpdate } from '../entities';
+import { IQueryBaseCreate } from '../entities';
 
 export default class VersionableRepository<
   D extends mongoose.Document,
@@ -12,15 +12,6 @@ export default class VersionableRepository<
     this.modelType = model;
   }
 
-  public async countDocuments(): Promise<number> {
-    return this.modelType.countDocuments({});
-  }
-
-  /**
-   * Create new application
-   * @property {string} body.name - The name of record.
-   * @returns {Application}
-   */
   public async create(options: IQueryBaseCreate): Promise<D> {
     console.log('BaseRepository - create:', JSON.stringify(options));
     const id = generateObjectId();
@@ -33,43 +24,6 @@ export default class VersionableRepository<
 
     return this.assignId(leanObject(result.toObject()));
   }
-
-  /**
-   * Insert Many
-   * @returns {Documents[]}
-   */
-    public async insertMany(docs: IQueryBaseCreate[], options?: any | null) {
-      console.log('BaseRepository - insertMany');
-      const docsToInsert: any = docs.map((item) => {
-        const id = item.id ? item.id : generateObjectId();
-        return { ...item, _id: id, originalId: id };
-      });
-      return this.modelType.insertMany(docsToInsert, options);
-    }
-
-  // public async update(options: IQueryBaseUpdate): Promise<D> {
-  //   console.log('BaseRepository - Update:', JSON.stringify(options));
-  //   console.log('Searching for previous valid object...', options.originalId);
-  //   const previous = await this.getById(options.originalId);
-
-  //   if (previous) {
-  //     console.log('Got Previous valid object...', previous);
-  //     const newInstance = Object.assign({}, previous, options);
-  //     newInstance['_id'] = generateObjectId();
-  //     delete newInstance.id;
-  //     delete newInstance.updatedAt;
-
-  //     console.log('Invalidating previous valid object...', newInstance);
-  //     await this.invalidate(options.originalId);
-
-  //     console.log('Creating new object...');
-  //     const data = await this.modelType.create({
-  //       ...newInstance,
-  //     });
-  //     console.log('Created new object...', data);
-  //     return leanObject(data.toObject());
-  //   }
-  // }
 
   protected async getAll(query: any = {}, options: any = {}): Promise<D[]> {
     options.limit = Number(options.limit) || 0;
@@ -92,64 +46,6 @@ export default class VersionableRepository<
       .find(query, {}, options)
       .collation({ locale: 'en', strength: 1 })
       .lean();
-  }
-
-  // protected async getByQuery(query: any = {}): Promise<D> {
-  //   console.log(query);
-  //   const conditions = { deletedAt: undefined, ...query };
-  //   console.log('BaseRepository - get:', JSON.stringify(conditions));
-
-  //   const result = await this.modelType.findOne(conditions).lean();
-
-  //   return this.assignId(leanObject(result));
-  // }
-
-  // protected async remove(id: string): Promise<D> {
-  //   const result = await this.getById(id);
-  //   if (result) {
-  //     return await this.invalidate(id);
-  //   }
-  //   return undefined;
-  // }
-
-  // protected async invalidate(id: string | string[]): Promise<D> {
-  //   const now = new Date();
-
-  //   const criteria = {
-  //     deletedAt: undefined,
-  //     originalId: {
-  //       $in: id,
-  //     },
-  //   };
-  //   return await this.modelType
-  //     .updateMany(criteria, { deletedAt: now }, { multi: true })
-  //     .lean();
-  // }
-
-  // protected async getById(id: string) {
-  //   console.log('BaseRepository - getById:', id);
-
-  //   const conditions = {
-  //     deletedAt: undefined,
-  //     originalId: id,
-  //   };
-  //   const result = await this.modelType.findOne(conditions).lean();
-
-  //   return this.assignId(leanObject(result));
-  // }
-
-  protected async get(conditions: any, populate?: any | null) {
-    console.log(
-      'BaseRepository - get:',
-      JSON.stringify(conditions),
-      JSON.stringify(populate),
-    );
-
-    const result = populate
-      ? await this.modelType.findOne(conditions).populate(populate).lean()
-      : await this.modelType.findOne(conditions).lean();
-
-    return this.assignId(leanObject(result));
   }
 
   protected assignId(result: any) {

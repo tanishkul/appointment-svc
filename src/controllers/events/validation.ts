@@ -1,12 +1,36 @@
+import * as moment from 'moment';
+
 import { RequestParameter } from '../../libs/constants';
 import { checkType } from '../../libs/utilities';
-import { idValidation, limitSkipValidation } from '../validation';
 
-const listValidation = {
-  ...limitSkipValidation,
+const getFreeSlots = {
+  date: {
+    custom: {
+      errorMessage: 'date should be in YYYY-MM-DD format!',
+      options: (value: string) => {
+        return moment(value, 'YYYY-MM-DD', true).isValid();
+      },
+    },
+    exists: {
+      errorMessage: 'Please Provide date!',
+    },
+    in: [RequestParameter.QUERY],
+  },
+  timezone: {
+    custom: {
+      errorMessage: 'timezone is not valid!',
+      options: (value: string) => {
+        return !!moment.tz.zone(value);
+      },
+    },
+    exists: {
+      errorMessage: 'Please Provide timezone!',
+    },
+    in: [RequestParameter.QUERY],
+  },
 };
 
-const createEventsValidation = {
+const createEvents = {
   dateTime: {
     custom: {
       errorMessage: 'dateTime should be in ISO string!',
@@ -37,31 +61,28 @@ const createEventsValidation = {
   },
 };
 
-const updateValidation = {
-  description: {
+const getBookedEvents = {
+  endDate: {
     custom: {
-      errorMessage: 'description should be string',
+      errorMessage: 'endDate should be in YYYY-MM-DD format!',
       options: (value: string) => {
-        return value ? checkType(value, 'string') : true;
+        return moment(value, 'YYYY-MM-DD', true).isValid();
       },
+    },
+    exists: {
+      errorMessage: 'Please Provide endDate!',
     },
     in: [RequestParameter.BODY],
   },
-  price: {
+  startDate: {
     custom: {
-      errorMessage: 'price should be number',
-      options: (value: number) => {
-        return value ? checkType(value, 'number') : true;
+      errorMessage: 'startDate should be in YYYY-MM-DD format!',
+      options: (value: string) => {
+        return moment(value, 'YYYY-MM-DD', true).isValid();
       },
     },
-    in: [RequestParameter.BODY],
-  },
-  title: {
-    custom: {
-      errorMessage: 'title should be string',
-      options: (value: string) => {
-        return value ? checkType(value, 'string') : true;
-      },
+    exists: {
+      errorMessage: 'Please Provide startDate!',
     },
     in: [RequestParameter.BODY],
   },
@@ -72,20 +93,7 @@ const updateValidation = {
  * If omitted, all request locations will be checked
  * */
 export default Object.freeze({
-  create: {
-    ...createEventsValidation,
-  },
-  delete: {
-    ...idValidation,
-  },
-  get: {
-    ...idValidation,
-  },
-  list: {
-    ...listValidation,
-  },
-  update: {
-    ...idValidation,
-    ...updateValidation,
-  },
+  createEvents,
+  getBookedEvents,
+  getFreeSlots,
 });

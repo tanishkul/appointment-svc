@@ -1,14 +1,9 @@
-import { Schema, SchemaDefinition, SchemaOptions } from 'mongoose';
-
 import VersionableSchema from '../../versionable/VersionableSchema';
 
 export default class EventSchema extends VersionableSchema {
   constructor(options: any, collections: any) {
     const baseSchema = {
       ...options,
-      start: {
-        type: Number,
-      },
       end: {
         type: Number,
       },
@@ -20,10 +15,13 @@ export default class EventSchema extends VersionableSchema {
         required: false,
         type: String,
       },
+      start: {
+        type: Number,
+      },
       startTime: {
         required: false,
         type: Date,
-      }
+      },
     };
     super(baseSchema, collections);
   }

@@ -1,5 +1,3 @@
-import IQueryEntity from './IQueryEntity';
-
-export default interface IQueryBaseCreate extends IQueryEntity {
+export default interface IQueryBaseCreate {
   id?: string;
 }

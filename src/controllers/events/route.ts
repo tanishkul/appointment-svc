@@ -8,14 +8,23 @@ const router = Router();
 
 router
   .route('/')
-  .post(...validationHandler(validation.create), eventController.createEvents);
+  .get(
+    ...validationHandler(validation.getFreeSlots),
+    eventController.getFreeSlots,
+  );
 
 router
-  .route('/free/')
-  .post(eventController.getFreeSlots);
+  .route('/')
+  .post(
+    ...validationHandler(validation.createEvents),
+    eventController.createEvents,
+  );
 
 router
   .route('/booked/')
-  .post(eventController.getBookedEvents);
+  .post(
+    ...validationHandler(validation.getBookedEvents),
+    eventController.getBookedEvents,
+  );
 
 export default router;

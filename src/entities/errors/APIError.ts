@@ -2,7 +2,6 @@ import { StatusCodes } from '../../libs/constants';
 import BaseError from './BaseError';
 import IError from './IError';
 
-
 /**
  * Class representing an API error.
  * @extends BaseError
@@ -19,7 +18,7 @@ export default class APIError extends BaseError {
     status: number = StatusCodes.INTERNAL_SERVER_ERROR,
     data: IError[] = [],
     type: string = APIError.name,
-    isPublic: boolean = false
+    isPublic: boolean = false,
   ) {
     super(message, status, data, type, isPublic);
   }

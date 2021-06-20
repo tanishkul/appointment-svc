@@ -1,6 +1,6 @@
-import { StatusCodes } from "../../libs/constants";
-import { getEnumKeyOrValue } from "../../libs/utilities";
-import IResponse, { IData, IMetadata } from "./IResponse";
+import { StatusCodes } from '../../libs/constants';
+import { getEnumKeyOrValue } from '../../libs/utilities';
+import IResponse, { IData, IMetadata } from './IResponse';
 
 export default class BadRequestResponse implements IResponse {
   public data: IData;
@@ -12,7 +12,7 @@ export default class BadRequestResponse implements IResponse {
     this.metadata = {
       code: StatusCodes.BAD_REQUEST,
       message,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
   }
 }

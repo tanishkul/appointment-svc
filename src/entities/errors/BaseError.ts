@@ -1,4 +1,4 @@
-import IError from "./IError";
+import IError from './IError';
 
 /**
  * @extends Error
@@ -10,7 +10,7 @@ export default abstract class BaseError extends Error {
     public status: number,
     public data: IError[],
     public type: string,
-    public isPublic: boolean
+    public isPublic: boolean,
   ) {
     super(message);
 

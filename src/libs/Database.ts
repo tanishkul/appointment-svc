@@ -1,5 +1,4 @@
 import * as mongoose from 'mongoose';
-import seed from './Seeding';
 export interface IDatabaseConfig {
   mongoUri: string;
 }
@@ -13,20 +12,15 @@ export default class Database {
         bufferMaxEntries: 0,
         keepAlive: true,
         poolSize: 10, // Maintain up to 10 socket connections
-        reconnectInterval: 500, // Reconnect every 500ms
-        reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
         useFindAndModify: false,
         useNewUrlParser: true,
         useUnifiedTopology: true,
       };
 
-      // Mock the mongoose for testing purpose using Mockgoose
-      // connect to mongo db
       mongoose.connect(mongoUri, options, async (err) => {
         if (err) {
           return reject(err);
         }
-        seed();
         resolve();
       });
 

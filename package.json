@@ -20,9 +20,7 @@
     "watch-test": "yarn run test -- --watchAll",
     "watch-test:ci": "yarn run watch-test -- --coverage",
     "test:c": "yarn run test -- --coverage",
-    "precommit": "CI=true yarn lint && yarn test",
-    "commit": "git-cz",
-    "push": "git push",
+    "precommit": "CI=true yarn lint",
     "lint": "./node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --exclude 'node_modules/**/*.{j,t}s'",
     "lint:fix": "yarn lint -- --fix"
   },

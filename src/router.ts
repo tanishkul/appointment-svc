@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import {  eventRouter, slotsRouter } from './controllers';
+import {  eventRouter } from './controllers';
 
 // tslint:disable-next-line:no-var-requires
 const appInfo = require('../package.json');
@@ -30,7 +30,6 @@ router.get('/health-check', (req, res) => {
   res.send('I am OK');
 });
 
-router.use('/slots', slotsRouter);
 router.use('/events', eventRouter);
 
 export default router;

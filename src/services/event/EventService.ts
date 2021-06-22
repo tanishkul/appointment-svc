@@ -46,14 +46,14 @@ class EventService {
   }
 
   public async getFreeSlots({ date, timezone }) {
-    const allSlots = getAllSlots(timezone);
+    const allSlots = getAllSlots(date, timezone);
     const endSlot = allSlots[allSlots.length - 1];
     let slots = [...allSlots];
     const events = await this.eventRepository.getQuery({
-      $and: [
-        { startTime: { $lt: new Date(endSlot.date) } },
-        { startTime: { $gte: new Date(date) } },
-      ],
+      startTime: {
+        $gte: new Date(date),
+        $lt: new Date(endSlot.date),
+      },
     });
     if (events.length) {
       events.map((item) => {
@@ -63,7 +63,7 @@ class EventService {
       });
     }
     slots = slots.map((slot) => {
-      return moment(slot.zoneTime).format('LT');
+      return new Date(slot.zoneTime).toLocaleTimeString('en-US', { timeZone: timezone });
     });
     return slots;
   }

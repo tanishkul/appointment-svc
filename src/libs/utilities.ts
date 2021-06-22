@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import * as momentTimezone from 'moment-timezone';
 import * as mongoose from 'mongoose';
 
 import config from '../config/configuration';
@@ -31,22 +32,22 @@ export const checkType = (value: any, type: string): boolean => {
   return false;
 };
 
-export const getAllSlots = (zone) => {
+export const getAllSlots = (dateString, zone) => {
   const { startHour, endHour, duration, timezone } = config;
   const format = 'hh:mm';
   const slotsArray = [];
-  let utcStartTime = new Date(moment.tz(startHour, format, timezone).utc().format());
+  let utcStartTime = momentTimezone.tz(`${dateString} ${startHour}`, timezone).toISOString();
   slotsArray.push({
     date: utcStartTime,
-    timestamp: utcStartTime.getTime(),
-    zoneTime: moment(utcStartTime.getTime()).tz(zone).format(),
+    timestamp: new Date(utcStartTime).getTime(),
+    zoneTime: moment(utcStartTime).tz(zone).format(),
   });
-  const utcEndTime = new Date(moment.tz(endHour, format, timezone).utc().format());
+  const utcEndTime = momentTimezone.tz(`${dateString} ${endHour}`, timezone).toISOString();
 
   while (utcStartTime < utcEndTime) {
-    utcStartTime = moment(utcStartTime).add(duration, 'm').toDate();
-    const zoneTime = moment(utcStartTime.getTime()).tz(zone).format();
-    slotsArray.push({ date: utcStartTime, zoneTime, timestamp: utcStartTime.getTime() });
+    utcStartTime = moment(utcStartTime).add(duration, 'm').toISOString();
+    const zoneTime = moment(utcStartTime).tz(zone).format();
+    slotsArray.push({ date: utcStartTime, zoneTime, timestamp: new Date(utcStartTime).getTime() });
   }
   slotsArray.pop();
   return slotsArray;
